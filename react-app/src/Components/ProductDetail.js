@@ -45,7 +45,7 @@ const ProductDetail = ({ onAddToCart }) => {
                         {product.description}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        ${product.price}
+                        R{product.price}
                     </Typography>
                     <Button variant="contained" color="primary" onClick={handleAddToCart}>Add to Cart</Button>
                 </CardContent>

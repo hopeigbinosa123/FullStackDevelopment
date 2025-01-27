@@ -1,7 +1,7 @@
 import React from 'react';
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-const PayPalButtonComponent = ({ amount, currency = "USD", onSuccess }) => {
+const PayPalButtonComponent = ({ amount, currency = "ZAR", onSuccess }) => {
     return (
         <PayPalScriptProvider options={{ "client-id": "AalmtkD0B6LLii4CU1sKPu4f_po0WXDC9edKBboXXE6xtMNMIryVkTp6Vaz_4xC_8M82inG_rRzAmo_R" }}>
             <PayPalButtons

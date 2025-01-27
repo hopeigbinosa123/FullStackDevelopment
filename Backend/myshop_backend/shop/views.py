@@ -60,13 +60,13 @@ class CreatePayPalPayment(APIView):
                     "items": [{
                         "name": "Total Purchase",
                         "price": f"{amount:.2f}",
-                        "currency": "USD",  # Ensure the currency is set to USD
+                        "currency": "ZAR",  # Ensure the currency is set to USD
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "total": f"{amount:.2f}",
-                    "currency": "USD"  # Ensure the currency is set to USD
+                    "currency": "ZAR"  # Ensure the currency is set to USD
                 },
                 "description": "Payment transaction description."
             }]

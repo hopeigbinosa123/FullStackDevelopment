@@ -35,10 +35,10 @@ const Checkout = () => {
                     required
                 />
                 <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                    Total: ${total.toFixed(2)}
+                    Total: R{total.toFixed(2)}
                 </Typography>
                 <Typography variant="h6" component="h2" sx={{ mt: 2 }}>Payment</Typography>
-                <PayPalButtonComponent amount={total.toFixed(2)} currency="USD" onSuccess={handlePaymentSuccess} />
+                <PayPalButtonComponent amount={total.toFixed(2)} currency="ZAR" onSuccess={handlePaymentSuccess} />
                 {paymentCompleted && <Typography variant="body2" color="success" sx={{ mt: 2 }}>Payment successful! Your order is on the way.</Typography>}
             </Box>
         </Container>

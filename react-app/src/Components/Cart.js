@@ -57,7 +57,7 @@ const Cart = ({ initialCartItems }) => {
                             </Box>
                         ))}
                         <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                            Total: ${total.toFixed(2)}
+                            Total: R{total.toFixed(2)}
                         </Typography>
                         <Button variant="contained" color="primary" onClick={handleClearCart}>Clear Cart</Button>
                         <Button variant="contained" color="primary" onClick={handleCheckout} sx={{ ml: 2 }}>Checkout</Button>
