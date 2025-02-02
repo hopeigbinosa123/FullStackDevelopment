@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { Container, Typography, Button, Box, IconButton, TextField, Grid } from '@mui/material';
+import { Delete, Add, Remove } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ initialCartItems }) => {
@@ -8,28 +9,26 @@ const Cart = ({ initialCartItems }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        calculateTotal();
+        calculateTotal(cartItems);
     }, [cartItems]);
 
-    const calculateTotal = () => {
-        const newTotal = cartItems.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0);
+    const calculateTotal = (items) => {
+        const newTotal = items.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0);
         setTotal(newTotal);
     };
 
-    const handleAddToCart = (product) => {
-        const existItem = cartItems.find(x => x.id === product.id);
+    const handleQuantityChange = (item, quantity) => {
+        if (quantity < 1) return;
 
-        if (existItem) {
-            const updatedCartItems = cartItems.map(x => x.id === existItem.id ? { ...x, qty: x.qty + 1 } : x);
-            setCartItems(updatedCartItems);
-        } else {
-            setCartItems([...cartItems, { ...product, qty: 1 }]);
-        }
+        const updatedItems = cartItems.map(cartItem =>
+            cartItem.id === item.id ? { ...cartItem, qty: quantity } : cartItem
+        );
+        setCartItems(updatedItems);
     };
 
-    const handleRemoveFromCart = (productId) => {
-        const updatedCartItems = cartItems.filter(x => x.id !== productId);
-        setCartItems(updatedCartItems);
+    const handleRemoveFromCart = (itemId) => {
+        const updatedItems = cartItems.filter(item => item.id !== itemId);
+        setCartItems(updatedItems);
     };
 
     const handleClearCart = () => {
@@ -48,16 +47,39 @@ const Cart = ({ initialCartItems }) => {
                     <Typography variant="body1">Your cart is empty</Typography>
                 ) : (
                     <Box>
-                        {cartItems.map(item => (
-                            <Box key={item.id} sx={{ mb: 2 }}>
-                                <Typography variant="h6">{item.title}</Typography>
-                                <Typography variant="body2">${item.price}</Typography>
-                                <Typography variant="body2">Quantity: {item.qty}</Typography>
-                                <Button variant="contained" color="secondary" onClick={() => handleRemoveFromCart(item.id)}>Remove</Button>
-                            </Box>
-                        ))}
+                        <Grid container spacing={2}>
+                            {cartItems.map(item => (
+                                <Grid item xs={12} key={item.id}>
+                                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                                        <Box>
+                                            <Typography variant="h6">{item.title}</Typography>
+                                            <Typography variant="body2">${item.price}</Typography>
+                                        </Box>
+                                        <Box display="flex" alignItems="center">
+                                            <IconButton onClick={() => handleQuantityChange(item, item.qty - 1)}>
+                                                <Remove />
+                                            </IconButton>
+                                            <TextField
+                                                type="number"
+                                                value={item.qty}
+                                                onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
+                                                inputProps={{ min: 1 }}
+                                                style={{ width: 50, marginRight: 8 }}
+                                            />
+                                            <IconButton onClick={() => handleQuantityChange(item, item.qty + 1)}>
+                                                <Add />
+                                            </IconButton>
+                                        </Box>
+                                        <Typography variant="body2">Price: ${item.price * item.qty}</Typography>
+                                        <IconButton onClick={() => handleRemoveFromCart(item.id)}>
+                                            <Delete />
+                                        </IconButton>
+                                    </Box>
+                                </Grid>
+                            ))}
+                        </Grid>
                         <Typography variant="h5" component="div" sx={{ mt: 2 }}>
-                            Total: R{total.toFixed(2)}
+                            Total: ${total.toFixed(2)}
                         </Typography>
                         <Button variant="contained" color="primary" onClick={handleClearCart}>Clear Cart</Button>
                         <Button variant="contained" color="primary" onClick={handleCheckout} sx={{ ml: 2 }}>Checkout</Button>

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Link } from '@mui/material';
+import { Container, TextField, Button, Typography, Link, Box, Alert } from '@mui/material';
 import axios from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
         try {
             const response = await axios.post('/login/', { username, password });
             const { access, refresh } = response.data;
@@ -17,19 +20,41 @@ const Login = ({ onLogin }) => {
             onLogin();
             navigate('/');
         } catch (error) {
-            console.error('Login error:', error);
+            setError(error.response?.data?.error || 'Invalid credentials');
         }
     };
 
     return (
-        <Container>
-            <Typography variant="h4">Login</Typography>
-            <TextField label="Username" value={username} onChange={(e) => setUsername(e.target.value)} fullWidth margin="normal" />
-            <TextField label="Password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth margin="normal" type="password" />
-            <Button variant="contained" color="primary" onClick={handleLogin}>Login</Button>
-            <Typography variant="body2" sx={{ mt: 2 }}>
-                Don't have an account? <Link href="/register">Register</Link>
-            </Typography>
+        <Container maxWidth="sm">
+            <Box mt={5}>
+                <Typography variant="h4" gutterBottom>Login</Typography>
+                {error && <Alert severity="error">{error}</Alert>}
+                <form onSubmit={handleLogin}>
+                    <TextField
+                        label="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <TextField
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
+                    <Button variant="contained" color="primary" type="submit" fullWidth>
+                        Login
+                    </Button>
+                </form>
+                <Typography variant="body2" sx={{ mt: 2 }}>
+                    Don't have an account? <Link href="/register">Register</Link>
+                </Typography>
+            </Box>
         </Container>
     );
 };

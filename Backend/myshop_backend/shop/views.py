@@ -7,10 +7,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import paypalrestsdk
-from .paypal_config import *
+from decouple import config
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+
+# Configure PayPal SDK
+paypalrestsdk.configure({
+    "mode": "sandbox",  # "live" for production
+    "client_id": config('PAYPAL_CLIENT_ID'),
+    "client_secret": config('PAYPAL_CLIENT_SECRET')
+})
 
 # Product, Order, Review ViewSets
 class ProductViewSet(viewsets.ModelViewSet):
@@ -41,8 +48,10 @@ class UserProductViewSet(viewsets.ReadOnlyModelViewSet):
 
 # PayPal Payment Views
 class CreatePayPalPayment(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
-        amount = request.data.get('amount')  # Get the dynamic amount from the request data
+        amount = request.data.get('amount')
         if not amount:
             return Response({'error': 'Amount is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,21 +61,21 @@ class CreatePayPalPayment(APIView):
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:8000/payment/execute/",
-                "cancel_url": "http://localhost:8000/payment/cancel/"
+                "return_url": request.build_absolute_uri('/payment/execute/'),
+                "cancel_url": request.build_absolute_uri('/payment/cancel/')
             },
             "transactions": [{
                 "item_list": {
                     "items": [{
                         "name": "Total Purchase",
                         "price": f"{amount:.2f}",
-                        "currency": "ZAR",  # Ensure the currency is set to USD
+                        "currency": "USD",
                         "quantity": 1
                     }]
                 },
                 "amount": {
                     "total": f"{amount:.2f}",
-                    "currency": "ZAR"  # Ensure the currency is set to USD
+                    "currency": "USD"
                 },
                 "description": "Payment transaction description."
             }]
@@ -79,16 +88,20 @@ class CreatePayPalPayment(APIView):
             return Response({'error': payment.error}, status=status.HTTP_400_BAD_REQUEST)
 
 class ExecutePayPalPayment(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
         payment_id = request.data.get('payment_id')
         payer_id = request.data.get('payer_id')
 
-        payment = paypalrestsdk.Payment.find(payment_id)
-
-        if payment.execute({"payer_id": payer_id}):
-            return Response({'status': 'Payment executed successfully!'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': payment.error}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            payment = paypalrestsdk.Payment.find(payment_id)
+            if payment.execute({"payer_id": payer_id}):
+                return Response({'status': 'Payment executed successfully!'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': payment.error}, status=status.HTTP_400_BAD_REQUEST)
+        except paypalrestsdk.ResourceNotFound as error:
+            return Response({'error': str(error)}, status=status.HTTP_404_NOT_FOUND)
 
 # Registration View
 class RegisterView(APIView):

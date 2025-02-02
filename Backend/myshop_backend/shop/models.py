@@ -19,6 +19,8 @@ class Profile(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=10)
     profile_picture = models.ImageField(upload_to='profile_picture/')
+    bio = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -49,11 +51,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review {self.id} - {self.product.title} by {self.user.username}"
-
-class Profile(models.Model): 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True, null=True)
-    location = models.CharField(max_length=30, blank=True, null=True)

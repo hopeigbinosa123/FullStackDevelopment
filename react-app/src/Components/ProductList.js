@@ -21,10 +21,6 @@ const ProductList = ({ onAddToCart }) => {
         navigate(`/product/${id}`);
     };
 
-    const handleAddToCart = (product) => {
-        onAddToCart(product);
-    };
-
     return (
         <Container>
             <Grid container spacing={4}>
@@ -45,10 +41,10 @@ const ProductList = ({ onAddToCart }) => {
                                     {product.description}
                                 </Typography>
                                 <Typography variant="h6" component="div">
-                                    R{product.price}
+                                    ${product.price}
                                 </Typography>
                                 <Button variant="contained" color="primary" onClick={() => handleViewProduct(product.id)}>View</Button>
-                                <Button variant="contained" color="secondary" onClick={() => handleAddToCart(product)} sx={{ ml: 2 }}>Add to Cart</Button>
+                                <Button variant="contained" color="secondary" onClick={() => onAddToCart(product)} sx={{ ml: 2 }}>Add to Cart</Button>
                             </CardContent>
                         </Card>
                     </Grid>
