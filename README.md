@@ -47,12 +47,12 @@ This is a full-stack ecommerce platform built with a React frontend, Django back
 ### Backend Setup
 1. Navigate to the `backend` directory:
     ```sh
-    cd backend
+    cd Backend
     ```
 2. Create and activate a virtual environment:
     ```sh
     python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
     ```
 3. Install the dependencies:
     ```sh
