@@ -26,6 +26,7 @@ const ProductDetail = ({ onAddToCart }) => {
     const handleAddToCart = () => {
         onAddToCart(product);
         navigate('/cart');
+        alert('Product added to cart!');
     };
 
     return (
