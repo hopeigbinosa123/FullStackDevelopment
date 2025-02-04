@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, Card, CardContent, CardMedia } from '@mui/material';
 import axios from '../api';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import AddToWishlist from './AddToWishlist';  // Import the AddToWishlist component
 
 const ProductDetail = ({ onAddToCart }) => {
     const { id } = useParams();
@@ -49,6 +49,7 @@ const ProductDetail = ({ onAddToCart }) => {
                         ${product.price}
                     </Typography>
                     <Button variant="contained" color="primary" onClick={handleAddToCart}>Add to Cart</Button>
+                    <AddToWishlist productId={product.id} />  {/* Add the AddToWishlist button */}
                 </CardContent>
             </Card>
         </Container>

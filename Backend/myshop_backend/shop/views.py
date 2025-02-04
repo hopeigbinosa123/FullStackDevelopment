@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Product, Order, Review
-from .serializers import ProductSerializer, OrderSerializer, ReviewSerializer, UserSerializer
+from .models import Product, Order, Review, Wishlist
+from .serializers import ProductSerializer, OrderSerializer, ReviewSerializer, UserSerializer, WishlistSerializer
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.views import APIView
@@ -134,3 +134,15 @@ class LoginView(APIView):
             })
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+# Wishlist ViewSet
+class WishlistViewSet(viewsets.ModelViewSet):
+    queryset = Wishlist.objects.all()
+    serializer_class = WishlistSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

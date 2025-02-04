@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Order, OrderItem, Review, Profile
+from .models import Product, Order, OrderItem, Review, Profile, Wishlist
 from django.contrib.auth.models import User
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -50,3 +50,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('user', 'bio', 'location')
         read_only_fields = ('user',)
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = '__all__'

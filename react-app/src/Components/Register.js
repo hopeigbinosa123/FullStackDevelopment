@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Link, Box, Alert } from '@mui/material';
-import axios from '../api';
+import API from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -21,11 +21,14 @@ const Register = () => {
             return;
         }
         try {
-            await axios.post('/register/', { username, email, password });
+            const response = await API.post('/register/', { username, email, password });
             setSuccess('User registered successfully!');
+            console.log(response.data);  // Debug log
             setTimeout(() => navigate('/login'), 2000);  // Redirect to login page after 2 seconds
         } catch (error) {
-            setError(error.response?.data?.error || 'Something went wrong');
+            console.log(error.response.data);  // Debug log
+            const errorMessage = error.response?.data?.message || 'Something went wrong'; // Adjusted to capture message if it exists
+            setError(errorMessage);
         }
     };
 

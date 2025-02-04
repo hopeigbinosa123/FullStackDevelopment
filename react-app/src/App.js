@@ -7,6 +7,7 @@ import Cart from './Components/Cart';
 import Register from './Components/Register';
 import Login from './Components/Login';
 import Checkout from './Components/Checkout';
+import Wishlist from './Components/Wishlist';
 import './App.css';
 
 const App = () => {
@@ -48,10 +49,11 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<ProductList onAddToCart={handleAddToCart} />} />
                     <Route path="/product/:id" element={<ProductDetail onAddToCart={handleAddToCart} />} />
-                    <Route path="/cart" element={<Cart initialCartItems={cartItems} />} />
+                    <Route path="/cart" element={<Cart initialCartItems={cartItems} />} />  {/* Ensure this line is present */}
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login onLogin={handleLogin} />} />
                     <Route path="/checkout" element={isAuthenticated ? <Checkout /> : <Navigate to="/login" />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
                 </Routes>
             </div>
         </Router>

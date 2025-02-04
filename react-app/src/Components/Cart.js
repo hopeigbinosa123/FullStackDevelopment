@@ -29,13 +29,16 @@ const Cart = ({ initialCartItems }) => {
     const handleRemoveFromCart = (itemId) => {
         const updatedItems = cartItems.filter(item => item.id !== itemId);
         setCartItems(updatedItems);
+        alert('Item deleted from cart!');
     };
 
     const handleClearCart = () => {
         setCartItems([]);
+        alert('Cart cleared!');
     };
 
     const handleCheckout = () => {
+        alert('Proceeding to checkout!');
         navigate('/checkout', { state: { total } });
     };
 
