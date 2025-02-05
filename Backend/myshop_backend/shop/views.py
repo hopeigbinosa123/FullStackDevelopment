@@ -12,14 +12,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
-# Configure PayPal SDK
 paypalrestsdk.configure({
-    "mode": "sandbox",  # "live" for production
+    "mode": "sandbox",
     "client_id": config('PAYPAL_CLIENT_ID'),
     "client_secret": config('PAYPAL_CLIENT_SECRET')
 })
 
-# Product, Order, Review ViewSets
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -34,8 +32,14 @@ class OrderViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
 
-# Admin and User ViewSets for Products
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 class AdminProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -46,7 +50,6 @@ class UserProductViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
 
-# PayPal Payment Views
 class CreatePayPalPayment(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -103,7 +106,6 @@ class ExecutePayPalPayment(APIView):
         except paypalrestsdk.ResourceNotFound as error:
             return Response({'error': str(error)}, status=status.HTTP_404_NOT_FOUND)
 
-# Registration View
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -117,7 +119,6 @@ class RegisterView(APIView):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Login View
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -135,7 +136,6 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-# Wishlist ViewSet
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
