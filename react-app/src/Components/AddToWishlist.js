@@ -5,7 +5,7 @@ import API from '../api';
 const AddToWishlist = ({ productId }) => {
     const handleAddToWishlist = async () => {
         try {
-            await API.post(`/wishlist/`, { product: productId });
+            await API.post('/wishlist/', { product: productId });
             alert('Product added to wishlist!');
         } catch (error) {
             console.error('Error adding product to wishlist:', error);
