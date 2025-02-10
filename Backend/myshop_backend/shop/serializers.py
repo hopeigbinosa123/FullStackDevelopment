@@ -54,4 +54,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
-        fields = '__all__'
+        fields = ['id', 'user', 'product']
+        read_only_fields = ['user']

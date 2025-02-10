@@ -1,70 +1,202 @@
-# Getting Started with Create React App
+### Frontend Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+This is the frontend part of an ecommerce web application built using React. The application allows users to browse products, add them to their cart, submit reviews, and manage their wishlist.
 
-In the project directory, you can run:
+## Installation and Setup
 
-### `npm start`
+### Prerequisites
+Make sure you have Node.js and npm (Node Package Manager) installed on your machine.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Steps to Setup
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Clone the Repository**:
+   ```sh
+   git clone https://github.com/your-repo/ecommerce-frontend.git
+   cd ecommerce-frontend
+   ```
 
-### `npm test`
+2. **Install Dependencies**:
+   ```sh
+   npm install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Start the React Development Server**:
+   ```sh
+   npm start
+   ```
 
-### `npm run build`
+The application will be available at `http://localhost:3000`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+frontend/
+│
+├── public/
+│   ├── index.html
+│   └── ...
+│
+├── src/
+│   ├── Components/
+│   │   ├── Navbar.js
+│   │   ├── ProductList.js
+│   │   ├── ProductDetail.js
+│   │   ├── Cart.js
+│   │   ├── Wishlist.js
+│   │   ├── ReviewForm.js
+│   │   └── ...
+│   ├── App.js
+│   ├── api.js
+│   ├── index.js
+│   └── ...
+│
+└── package.json
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+### Navbar
+The Navbar component provides navigation links to different pages, including Home, Wishlist, Cart, Login, and Register. It also includes a responsive hamburger menu for mobile views.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Product List
+The ProductList component displays a list of products fetched from the backend API. Users can browse through the products and select one to view its details.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Product Detail
+The ProductDetail component displays detailed information about a specific product, allows users to add the product to their cart, and submit reviews. It also includes the AddToWishlist component for adding products to the wishlist.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Cart
+The Cart component displays the products added to the user's cart, allows users to manage quantities, and proceed to checkout.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Wishlist
+The Wishlist component displays the products added to the user's wishlist. Users can view and manage their wishlist items.
 
-## Learn More
+### Review Form
+The ReviewForm component allows users to submit reviews and ratings for products.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Integration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### api.js
+The `api.js` file sets up an Axios instance for making API requests to the backend. It includes an interceptor to add the authentication token to the request headers.
 
-### Code Splitting
+**api.js**:
+```javascript
+import axios from 'axios';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+const API = axios.create({ baseURL: 'http://localhost:8000/api' });
 
-### Analyzing the Bundle Size
+API.interceptors.request.use((req) => {
+    const token = localStorage.getItem('access');
+    if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+    }
+    return req;
+});
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+export default API;
+```
 
-### Making a Progressive Web App
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### How to Add Products to Cart
+1. Navigate to a product detail page.
+2. Click the "Add to Cart" button.
+3. The product will be added to your cart.
 
-### Advanced Configuration
+### How to Add Products to Wishlist
+1. Navigate to a product detail page.
+2. Click the "Add to Wishlist" button.
+3. The product will be added to your wishlist. Ensure you are logged in.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### How to Submit Reviews
+1. Navigate to a product detail page.
+2. Fill out the review form with a rating and comment.
+3. Click the "Submit Review" button to submit your review. Ensure you are logged in.
 
-### Deployment
+## Components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Navbar.js
+The Navbar component with responsive design and links to various pages.
 
-### `npm run build` fails to minify
+**Navbar.js**:
+```javascript
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+const Navbar = ({ isAuthenticated, onLogout }) => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    };
+
+    const drawerList = (
+        <List>
+            <ListItem button component={Link} to="/" onClick={toggleDrawer(false)}>
+                <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button component={Link} to="/wishlist" onClick={toggleDrawer(false)}>
+                <ListItemText primary="Wishlist" />
+            </ListItem>
+            <ListItem button component={Link} to="/cart" onClick={toggleDrawer(false)}>
+                <ListItemText primary="Cart" />
+            </ListItem>
+            {isAuthenticated ? (
+                <ListItem button onClick={() => { onLogout(); toggleDrawer(false)(); }}>
+                    <ListItemText primary="Logout" />
+                </ListItem>
+            ) : (
+                <>
+                    <ListItem button component={Link} to="/login" onClick={toggleDrawer(false)}>
+                        <ListItemText primary="Login" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/register" onClick={toggleDrawer(false)}>
+                        <ListItemText primary="Register" />
+                    </ListItem>
+                </>
+            )}
+        </List>
+    );
+
+    return (
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={toggleDrawer(true)}
+                    sx={{ mr: 2, display: { sm: 'none' } }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Blendify
+                </Typography>
+                <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+                    {drawerList}
+                </Drawer>
+                <Button color="inherit" component={Link} to="/" sx={{ display: { xs: 'none', sm: 'block' } }}>Home</Button>
+                <Button color="inherit" component={Link} to="/wishlist" sx={{ display: { xs: 'none', sm: 'block' } }}>Wishlist</Button>
+                <Button color="inherit" component={Link} to="/cart" sx={{ display: { xs: 'none', sm: 'block' } }}>Cart</Button>
+                {isAuthenticated ? (
+                    <Button color="inherit" onClick={onLogout} sx={{ display: { xs: 'none', sm: 'block' } }}>Logout</Button>
+                ) : (
+                    <>
+                        <Button color="inherit" component={Link} to="/login" sx={{ display: { xs: 'none', sm: 'block' } }}>Login</Button>
+                        <Button color="inherit" component={Link} to="/register" sx={{ display: { xs: 'none', sm: 'block' } }}>Register</Button>
+                    </>
+                )}
+            </Toolbar>
+        </AppBar>
+    );
+};
+
+export default Navbar;
+```

@@ -136,6 +136,10 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
@@ -145,4 +149,5 @@ class WishlistViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        logger.debug(f'Incoming wishlist data: {self.request.data}')
         serializer.save(user=self.request.user)

@@ -1,112 +1,181 @@
-# Ecommerce Platform
+### Documentation Outline
 
-## Overview
-This is a full-stack ecommerce platform built with a React frontend, Django backend, and MySQL database. The platform allows users to browse products, add items to their cart, manage their cart, and proceed to checkout. The application includes user authentication and authorization features to secure access to certain functionalities.
+1. **Project Overview**
+2. **Installation and Setup**
+3. **Project Structure**
+4. **Features**
+   - Wishlist
+   - Reviews and Ratings
+5. **API Endpoints**
+   - Authentication
+   - Products
+   - Orders
+   - Reviews
+   - Wishlist
+6. **Frontend Components**
+   - Product Detail
+   - Cart
+   - Wishlist
+   - Review Form
+7. **Usage**
+   - How to Add Products to Cart
+   - How to Add Products to Wishlist
+   - How to Submit Reviews
+8. **Contributing**
+9. **License**
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-  - [Frontend Setup](#frontend-setup)
-  - [Backend Setup](#backend-setup)
-  - [Database Setup](#database-setup)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
+### 1. Project Overview
 
-## Features
-- Product listing and detail pages
-- Add to cart and cart management
-- User authentication (registration, login, logout)
-- Checkout process
-- Responsive design
+This project is an ecommerce web application that allows users to browse products, add them to their cart, submit reviews, and manage their wishlist. The application is built using Django for the backend and React for the frontend.
 
-## Tech Stack
-- **Frontend**: React, Material-UI
-- **Backend**: Django, Django REST Framework
-- **Database**: MySQL
+### 2. Installation and Setup
 
-## Installation
+**Backend Setup**:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/ecommerce-project.git
+   cd ecommerce-project
+   ```
 
-### Frontend Setup
-1. Navigate to the `frontend` directory:
-    ```sh
-    cd frontend
-    ```
-2. Install the dependencies:
-    ```sh
-    npm install
-    ```
-3. Start the development server:
-    ```sh
-    npm start
-    ```
+2. Set up the virtual environment:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   ```
 
-### Backend Setup
-1. Navigate to the `backend` directory:
-    ```sh
-    cd Backend
-    ```
-2. Create and activate a virtual environment:
-    ```sh
-    python -m venv venv
-    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
-    ```
 3. Install the dependencies:
-    ```sh
-    pip install -r requirements.txt
-    ```
-4. Apply the migrations:
-    ```sh
-    python manage.py migrate
-    ```
-5. Create a superuser to access the Django admin:
-    ```sh
-    python manage.py createsuperuser
-    ```
-6. Start the development server:
-    ```sh
-    python manage.py runserver
-    ```
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-### Database Setup
-1. Install MySQL and set up a new database.
-2. Update the `settings.py` file in the backend project with your database credentials:
-    ```python
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'your_database_name',
-            'USER': 'your_database_user',
-            'PASSWORD': 'your_database_password',
-            'HOST': 'localhost',
-            'PORT': '3306',
-        }
-    }
-    ```
+4. Apply migrations:
+   ```sh
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
 
-## Usage
-- Navigate to the homepage to browse products.
-- Click on a product to view its details and add it to the cart.
-- Manage your cart by adding, removing, and updating item quantities.
-- Register or log in to proceed to checkout.
+5. Start the development server:
+   ```sh
+   python manage.py runserver
+   ```
 
-## API Documentation
-The backend API provides endpoints to manage products, users, and cart functionalities. Here are some key endpoints:
+**Frontend Setup**:
+1. Navigate to the frontend directory:
+   ```sh
+   cd frontend
+   ```
 
-- `GET /api/products/`: Retrieve the list of products.
-- `GET /api/products/<id>/`: Retrieve details of a specific product.
-- `POST /api/cart/`: Add an item to the cart.
-- `PUT /api/cart/<id>/`: Update the quantity of an item in the cart.
-- `DELETE /api/cart/<id>/`: Remove an item from the cart.
-- `POST /api/users/register/`: Register a new user.
-- `POST /api/users/login/`: Log in a user.
+2. Install the dependencies:
+   ```sh
+   npm install
+   ```
 
-## Contributing
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+3. Start the React development server:
+   ```sh
+   npm start
+   ```
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+### 3. Project Structure
+
+```
+ecommerce-project/
+│
+├── backend/
+│   ├── manage.py
+│   ├── shop/
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── ...
+│   └── ...
+│
+├── frontend/
+│   ├── src/
+│   │   ├── Components/
+│   │   │   ├── Navbar.js
+│   │   │   ├── ProductList.js
+│   │   │   ├── ProductDetail.js
+│   │   │   ├── Cart.js
+│   │   │   ├── Wishlist.js
+│   │   │   ├── ReviewForm.js
+│   │   │   └── ...
+│   │   ├── App.js
+│   │   ├── api.js
+│   │   └── index.js
+│   └── ...
+│
+└── ...
+```
+
+### 4. Features
+
+#### Wishlist
+Users can add products to their wishlist and view them later. The wishlist feature enhances user engagement and retention.
+
+#### Reviews and Ratings
+Users can submit reviews and ratings for products. This feature helps build trust and provides valuable feedback to improve product offerings.
+
+### 5. API Endpoints
+
+#### Authentication
+- `POST /api/register/` - Register a new user.
+- `POST /api/login/` - Log in and obtain authentication tokens.
+
+#### Products
+- `GET /api/products/` - Retrieve a list of products.
+- `GET /api/products/:id/` - Retrieve details of a specific product.
+
+#### Orders
+- `GET /api/orders/` - Retrieve a list of orders.
+- `POST /api/orders/` - Create a new order.
+
+#### Reviews
+- `GET /api/reviews/?product=:productId` - Retrieve reviews for a specific product.
+- `POST /api/reviews/` - Submit a new review.
+
+#### Wishlist
+- `GET /api/wishlist/` - Retrieve the user's wishlist.
+- `POST /api/wishlist/` - Add a product to the wishlist.
+
+### 6. Frontend Components
+
+#### Product Detail
+The product detail page displays information about a specific product, allows users to add the product to their cart, and submit reviews.
+
+#### Cart
+The cart page displays the products added to the user's cart and allows users to manage quantities and proceed to checkout.
+
+#### Wishlist
+The wishlist page displays the products added to the user's wishlist.
+
+#### Review Form
+The review form allows users to submit reviews and ratings for products.
+
+### 7. Usage
+
+#### How to Add Products to Cart
+1. Navigate to a product detail page.
+2. Click the "Add to Cart" button.
+3. The product will be added to your cart.
+
+#### How to Add Products to Wishlist
+1. Navigate to a product detail page.
+2. Click the "Add to Wishlist" button.
+3. The product will be added to your wishlist. Ensure you are logged in.
+
+#### How to Submit Reviews
+1. Navigate to a product detail page.
+2. Fill out the review form with a rating and comment.
+3. Click the "Submit Review" button to submit your review. Ensure you are logged in.
+
+### 8. Contributing
+We welcome contributions! Please follow these steps to contribute:
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Commit your changes and push to your branch.
+4. Open a pull request.
+
+### 9. License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
