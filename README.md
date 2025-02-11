@@ -40,7 +40,7 @@ This project is an ecommerce web application that allows users to browse product
 2. Set up the virtual environment:
    ```sh
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   source venv/bin/activate   # On Windows: .venv\Scripts\activate
    ```
 
 3. Install the dependencies:
