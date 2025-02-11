@@ -29,6 +29,10 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -38,7 +42,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        logger.debug(f'Incoming review data: {self.request.data}')
         serializer.save(user=self.request.user)
+
 
 class AdminProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()

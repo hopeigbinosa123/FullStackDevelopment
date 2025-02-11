@@ -17,7 +17,9 @@ const ReviewForm = ({ productId, onReviewSubmit }) => {
             onReviewSubmit(); // Trigger re-fetching of reviews
         } catch (error) {
             console.error('Error submitting review:', error);
-            if (error.response.status === 401) {
+            if (error.response && error.response.status === 400) {
+                alert('Bad request. Please try again.');
+            } else if (error.response && error.response.status === 401) {
                 alert('You need to be logged in to submit a review.');
             }
         }

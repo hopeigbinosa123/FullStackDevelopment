@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Product, Profile
+from .models import Product, Profile, Order, OrderItem, Review, Wishlist
 
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'stock', 'created_at', 'updated_at', 'image_url')
-    search_fields = ('title', 'description')
-    list_filter = ('created_at', 'updated_at')
-
-admin.site.register(Product, ProductAdmin)
+# Register your models here.
+admin.site.register(Product)
 admin.site.register(Profile)
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(Review)
+admin.site.register(Wishlist)
