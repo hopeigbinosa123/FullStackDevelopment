@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import './style.css'; // Make sure to import your CSS file
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
     );
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" className="sticky-navbar">
             <Toolbar>
                 <IconButton
                     color="inherit"

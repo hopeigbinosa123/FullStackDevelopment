@@ -8,7 +8,7 @@ const ProductList = ({ onAddToCart }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/products')
+        axios.get('/products/')
             .then(response => {
                 setProducts(response.data);
             })
@@ -30,7 +30,7 @@ const ProductList = ({ onAddToCart }) => {
                             <CardMedia
                                 component="img"
                                 height="250"
-                                image={product.imageUrl}
+                                image={product.image_url}  // Updated property name
                                 alt={product.title}
                             />
                             <CardContent>
