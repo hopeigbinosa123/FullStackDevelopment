@@ -11,6 +11,7 @@ const Wishlist = () => {
         const fetchWishlist = async () => {
             try {
                 const response = await API.get('/wishlist/');
+                console.log('Complete Fetched Wishlist Data:', JSON.stringify(response.data, null, 2)); // Log complete fetched data
                 setWishlistItems(response.data);
             } catch (error) {
                 console.error('Error fetching wishlist:', error);
@@ -23,7 +24,12 @@ const Wishlist = () => {
     }, []);
 
     const handleViewProduct = (productId) => {
-        navigate(`/product/${productId}`);
+        if (productId) {
+            navigate(`/product/${productId}`);
+        } else {
+            console.error('Product ID is undefined.');
+            alert('Error: Product ID is undefined.');
+        }
     };
 
     return (
@@ -41,12 +47,18 @@ const Wishlist = () => {
                                 <CardMedia
                                     component="img"
                                     height="250"
-                                    image={item.product.image_url}
-                                    alt={item.product.title}
+                                    image={item.product?.image_url} // Using optional chaining to avoid errors if product is undefined
+                                    alt={item.product?.title}
                                 />
                                 <CardContent>
-                                    <Typography variant="h5">{item.product.title}</Typography>
-                                    <Button variant="contained" color="primary" onClick={() => handleViewProduct(item.product.id)}>View Product</Button>
+                                    <Typography variant="h5">{item.product?.title}</Typography>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => handleViewProduct(item.product?.id)}
+                                    >
+                                        View Product
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </Grid>
