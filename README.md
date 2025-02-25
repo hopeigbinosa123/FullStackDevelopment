@@ -39,8 +39,9 @@ This project is an ecommerce web application that allows users to browse product
 
 2. Set up the virtual environment:
    ```sh
+   cd backend
    python -m venv venv
-   source venv/bin/activate   # On Windows: .venv\Scripts\activate
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
 
 3. Install the dependencies:
@@ -62,7 +63,7 @@ This project is an ecommerce web application that allows users to browse product
 **Frontend Setup**:
 1. Navigate to the frontend directory:
    ```sh
-   cd frontend
+   cd react-app
    ```
 
 2. Install the dependencies:
@@ -82,7 +83,7 @@ ecommerce-project/
 │
 ├── backend/
 │   ├── manage.py
-│   ├── shop/
+│   ├── myshop_backend/
 │   │   ├── models.py
 │   │   ├── serializers.py
 │   │   ├── views.py
@@ -178,4 +179,3 @@ We welcome contributions! Please follow these steps to contribute:
 
 ### 9. License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
