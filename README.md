@@ -39,7 +39,7 @@ To start using MyShop, simply visit the [MyShop website](http://localhost:3000) 
 1. **Clone the Repository**:
    ```sh
    git clone https://github.com/hopeigbinosa123/FullStackDevelopment.git
-   cd myshop_backend
+   cd backend
    ```
 
 ````
