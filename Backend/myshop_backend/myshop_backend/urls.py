@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from shop.views import ProductViewSet, OrderViewSet, ReviewViewSet, AdminProductViewSet, UserProductViewSet, CreatePayPalPayment, ExecutePayPalPayment, RegisterView, LoginView, WishlistViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='products')
@@ -19,3 +21,7 @@ urlpatterns = [
     path('create-paypal-payment/', CreatePayPalPayment.as_view(), name='create-paypal-payment'),
     path('execute-paypal-payment/', ExecutePayPalPayment.as_view(), name='execute-paypal-payment'),
 ]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

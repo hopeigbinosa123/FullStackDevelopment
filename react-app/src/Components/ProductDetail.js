@@ -50,7 +50,7 @@ const ProductDetail = ({ onAddToCart }) => {
                 <CardMedia
                     component="img"
                     height="500"
-                    image={product.image_url}
+                    image={`${process.env.REACT_APP_API_URL}${product.image || '/media/products/default.jpg'}`}  // Use correct image field and API URL
                     alt={product.title}
                 />
                 <CardContent>

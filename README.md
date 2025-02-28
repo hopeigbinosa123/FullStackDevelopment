@@ -1,206 +1,178 @@
-### Documentation Outline
+# Ecommerce Project
 
-1. **Project Overview**
-2. **Installation and Setup**
-3. **Project Structure**
-4. **Features**
-   - Wishlist
-   - Reviews and Ratings
-5. **API Endpoints**
-   - Authentication
-   - Products
-   - Orders
-   - Reviews
-   - Wishlist
-6. **Frontend Components**
-   - Product Detail
-   - Cart
-   - Wishlist
-   - Review Form
-7. **Usage**
-   - How to Add Products to Cart
-   - How to Add Products to Wishlist
-   - How to Submit Reviews
-8. **Contributing**
-9. **License**
+Welcome to Blendify, a full-stack e-commerce application designed to make shopping a delightful experience. This document provides instructions for setting up, running, and using both the backend and frontend components of MyShop.
 
-### 1. Project Overview
+## Introduction
 
-This project is an ecommerce web application that allows users to browse products, add them to their cart, submit reviews, and manage their wishlist. The application is built using Django for the backend and React for the frontend.
+Blendify is a comprehensive e-commerce application featuring a robust Django backend and a sleek React frontend. Whether you're a developer looking to contribute or a user eager to explore, this guide will help you get started.
 
-### 2. Installation and Setup
+---
 
-**Backend Setup**:
+## For Users
 
-1. Clone the repository:
+### Features
 
+- **Browse Products**: View a wide range of products with detailed descriptions.
+- **Add to Cart**: Easily add products to your shopping cart.
+- **Wishlist**: Save your favorite products for later.
+- **Reviews**: Read and write reviews for products.
+- **Secure Payments**: Pay securely using PayPal.
+
+### Getting Started
+
+To start using MyShop, simply visit the [MyShop website](http://localhost:3000) (replace with the live URL once deployed). Browse through the products, add items to your cart, and enjoy a seamless shopping experience.
+
+---
+
+## For Developers
+
+### Prerequisites
+
+- Python 3.x
+- Node.js
+- MySQL
+- Virtualenv
+- npm or yarn
+
+### Backend Setup
+
+1. **Clone the Repository**:
    ```sh
    git clone https://github.com/hopeigbinosa123/FullStackDevelopment.git
-   cd FullStackDevelopment
+   cd myshop_backend
    ```
 
-2. Set up the virtual environment:
+````
+
+2. **Create a Virtual Environment and Activate It**:
 
    ```sh
-   cd backend
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   source venv/bin/activate
    ```
 
-3. Install the dependencies:
+3. **Install the Required Packages**:
 
    ```sh
    pip install -r requirements.txt
    ```
 
-4. Apply migrations:
+4. **Configure the Database**:
+
+   - Ensure you have MySQL installed and create a database named `ECOMMERCE`.
+   - Update the `DATABASES` setting in `Backend/myshop_backend/settings.py` with your MySQL credentials.
+
+5. **Apply the Migrations**:
 
    ```sh
-   python manage.py makemigrations
    python manage.py migrate
    ```
 
-5. Start the development server:
+6. **Create a Superuser**:
+
+   ```sh
+   python manage.py createsuperuser
+   ```
+
+7. **Run the Development Server**:
    ```sh
    python manage.py runserver
    ```
 
-**Frontend Setup**:
+### Environment Variables
 
-1. Navigate to the frontend directory:
+Create a `.env` file in the root directory with the following variables:
+
+```env
+SECRET_KEY=your_secret_key
+PAYPAL_CLIENT_ID=your_paypal_client_id
+PAYPAL_CLIENT_SECRET=your_paypal_client_secret
+```
+
+### API Endpoints
+
+The available API endpoints are:
+
+- `/api/products/` - List and create products
+- `/api/orders/` - List and create orders
+- `/api/reviews/` - List and create reviews
+- `/api/wishlist/` - List and create wishlist items
+- `/api/register/` - Register a new user
+- `/api/login/` - Login an existing user
+
+### Serving Media Files
+
+To serve media files during development, ensure your `settings.py` has the following configurations:
+
+```python
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+```
+
+---
+
+### Frontend Setup
+
+1. **Clone the Repository**:
 
    ```sh
-   cd react-app
+   git clone https://github.com/hopeigbinosa123/FullStackDevelopment.git
+   cd myshop_frontend
    ```
 
-2. Install the dependencies:
+2. **Install the Required Packages**:
 
    ```sh
    npm install
+   # or
+   yarn install
    ```
 
-3. Start the React development server:
+3. **Create a `.env` File in the Root Directory**:
+
+   ```env
+   REACT_APP_API_URL=http://localhost:8000
+   ```
+
+4. **Run the Development Server**:
    ```sh
    npm start
+   # or
+   yarn start
    ```
 
-### 3. Project Structure
+### Folder Structure
+
+The folder structure of the project is as follows:
 
 ```
-ecommerce-project/
-│
-├── backend/
-│   ├── manage.py
-│   ├── myshop_backend/
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── ...
-│   └── ...
-│
-├── frontend/
-│   ├── src/
-│   │   ├── Components/
-│   │   │   ├── Navbar.js
-│   │   │   ├── ProductList.js
-│   │   │   ├── ProductDetail.js
-│   │   │   ├── Cart.js
-│   │   │   ├── Wishlist.js
-│   │   │   ├── ReviewForm.js
-│   │   │   └── ...
-│   │   ├── App.js
-│   │   ├── api.js
-│   │   └── index.js
-│   └── ...
-│
-└── ...
+react-app/
+├── public/
+├── src/
+│   ├── components/
+│   ├── redux/
+│   ├── api/
+│   ├── App.js
+│   ├── index.js
+├── .env
+├── package.json
 ```
 
-### 4. Features
+### Available Scripts
 
-#### Wishlist
+In the project directory, you can run:
 
-Users can add products to their wishlist and view them later. The wishlist feature enhances user engagement and retention.
+- `npm start` - Runs the app in development mode.
+- `npm test` - Launches the test runner.
+- `npm run build` - Builds the app for production.
 
-#### Reviews and Ratings
+### Contributing
 
-Users can submit reviews and ratings for products. This feature helps build trust and provides valuable feedback to improve product offerings.
+Contributions are welcome! Please open an issue or submit a pull request.
 
-### 5. API Endpoints
+### License
 
-#### Authentication
+This project is licensed under the MIT License.
 
-- `POST /api/register/` - Register a new user.
-- `POST /api/login/` - Log in and obtain authentication tokens.
-
-#### Products
-
-- `GET /api/products/` - Retrieve a list of products.
-- `GET /api/products/:id/` - Retrieve details of a specific product.
-
-#### Orders
-
-- `GET /api/orders/` - Retrieve a list of orders.
-- `POST /api/orders/` - Create a new order.
-
-#### Reviews
-
-- `GET /api/reviews/?product=:productId` - Retrieve reviews for a specific product.
-- `POST /api/reviews/` - Submit a new review.
-
-#### Wishlist
-
-- `GET /api/wishlist/` - Retrieve the user's wishlist.
-- `POST /api/wishlist/` - Add a product to the wishlist.
-
-### 6. Frontend Components
-
-#### Product Detail
-
-The product detail page displays information about a specific product, allows users to add the product to their cart, and submit reviews.
-
-#### Cart
-
-The cart page displays the products added to the user's cart and allows users to manage quantities and proceed to checkout.
-
-#### Wishlist
-
-The wishlist page displays the products added to the user's wishlist.
-
-#### Review Form
-
-The review form allows users to submit reviews and ratings for products.
-
-### 7. Usage
-
-#### How to Add Products to Cart
-
-1. Navigate to a product detail page.
-2. Click the "Add to Cart" button.
-3. The product will be added to your cart.
-
-#### How to Add Products to Wishlist
-
-1. Navigate to a product detail page.
-2. Click the "Add to Wishlist" button.
-3. The product will be added to your wishlist. Ensure you are logged in.
-
-#### How to Submit Reviews
-
-1. Navigate to a product detail page.
-2. Fill out the review form with a rating and comment.
-3. Click the "Submit Review" button to submit your review. Ensure you are logged in.
-
-### 8. Contributing
-
-We welcome contributions! Please follow these steps to contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Commit your changes and push to your branch.
-4. Open a pull request.
-
-### 9. License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+---
+````

@@ -3,6 +3,8 @@ from .models import Product, Order, OrderItem, Review, Profile, Wishlist
 from django.contrib.auth.models import User
 
 class ProductSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)  # Ensure the image field is correctly serialized
+
     class Meta:
         model = Product
         fields = '__all__'

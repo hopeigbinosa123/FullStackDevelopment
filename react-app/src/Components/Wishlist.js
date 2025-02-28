@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Grid, Card, CardContent, CardMedia, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import API from '../api';
+import axios from '../api';
 
 const Wishlist = () => {
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -10,8 +10,7 @@ const Wishlist = () => {
     useEffect(() => {
         const fetchWishlist = async () => {
             try {
-                const response = await API.get('/wishlist/');
-                console.log('Complete Fetched Wishlist Data:', JSON.stringify(response.data, null, 2)); // Log complete fetched data
+                const response = await axios.get('/wishlist/');
                 setWishlistItems(response.data);
             } catch (error) {
                 console.error('Error fetching wishlist:', error);
@@ -47,15 +46,15 @@ const Wishlist = () => {
                                 <CardMedia
                                     component="img"
                                     height="250"
-                                    image={item.product?.image_url} // Using optional chaining to avoid errors if product is undefined
-                                    alt={item.product?.title}
+                                    image={`${process.env.REACT_APP_API_URL}${item.product.image}`}  // Use correct image field and API URL
+                                    alt={item.product.title}
                                 />
                                 <CardContent>
-                                    <Typography variant="h5">{item.product?.title}</Typography>
+                                    <Typography variant="h5">{item.product.title}</Typography>
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={() => handleViewProduct(item.product?.id)}
+                                        onClick={() => handleViewProduct(item.product.id)}
                                     >
                                         View Product
                                     </Button>
