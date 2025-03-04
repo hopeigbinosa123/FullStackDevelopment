@@ -113,11 +113,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 ### Frontend Setup
 
-1. **Clone the Repository**:
+1. go into the react-app
 
-   ```sh
-   git clone https://github.com/hopeigbinosa123/FullStackDevelopment.git
-   cd myshop_frontend
+   cd react-app
    ```
 
 2. **Install the Required Packages**:
