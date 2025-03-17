@@ -145,15 +145,26 @@ The folder structure of the project is as follows:
 
 ```
 react-app/
+│
 ├── public/
+│   ├── index.html
+│   └── ...
+│
 ├── src/
-│   ├── components/
-│   ├── redux/
-│   ├── api/
+│   ├── Components/
+│   │   ├── Navbar.js
+│   │   ├── ProductList.js
+│   │   ├── ProductDetail.js
+│   │   ├── Cart.js
+│   │   ├── Wishlist.js
+│   │   ├── ReviewForm.js
+│   │   └── ...
 │   ├── App.js
+│   ├── api.js
 │   ├── index.js
-├── .env
-├── package.json
+│   └── ...
+│
+└── package.json
 ```
 
 ### Available Scripts
